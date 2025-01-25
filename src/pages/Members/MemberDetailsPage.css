@@ -1,0 +1,7 @@
+.member-container{
+    display: flex;
+    width: 80%;
+}
+.book-info{
+    width: 50%;
+}

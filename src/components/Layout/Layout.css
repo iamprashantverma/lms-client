@@ -1,0 +1,11 @@
+.layout-container{
+    display: flex ;
+    height: 95vh;
+    width: 100vw;
+    flex-direction: row;
+}
+.admin-content-container{
+    border: 2px solid green;
+    height: 95vh;
+    width: 95vw;
+}

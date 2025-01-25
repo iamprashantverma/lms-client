@@ -1,0 +1,39 @@
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  
+}
+.App {
+  height: 100%; 
+  width: 100%; 
+}
+
+.navbar{
+  height: 10%;
+  width: 100%;
+}
+
+.layout {
+  display: flex;
+  height: 90%;
+  width: 100%;
+}
+
+.sidebar-open {
+  width: 15%;
+  transition: width 0.3s ease;
+}
+
+.sidebar-close {
+  width: 0;
+  transition: width 0.3s ease;
+  overflow: hidden;
+}
+
+.content-container {
+  flex-grow:  1;
+  transition: width 0.3s ease-in-out;
+  width: 85%;
+}
