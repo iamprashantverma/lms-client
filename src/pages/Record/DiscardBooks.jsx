@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getAllDiscardBook } from "../../services/api/adminService"; // Assuming the API to fetch discarded books is set up
 import RecordCard from "../../components/Card/Record/RecordCard"; // Reusing RecordCard component
 import Pagination from "../../components/Common/Pagination"; // Pagination component
+import './DiscardBooks.css' ;
 
 function DiscardedBooks() {
   const [loading, setLoading] = useState(true);
@@ -34,14 +35,8 @@ function DiscardedBooks() {
     <div className="discarded-books-container">
       <h1>Discarded Books</h1>
 
-      {/* Loading Spinner */}
-      {loading && <div className="loading-spinner">Loading...</div>}
 
-      {/* Error Message */}
-      {error && <div className="error-message">{error}</div>}
-
-      {/* Display Discarded Books in Grid */}
-      {!loading && !error && data.length > 0 && (
+      {data.length > 0 && (
         <div className="discarded-books-grid">
           {data.map((record) => (
             <RecordCard key={record.recordId} record={record} />
@@ -49,13 +44,8 @@ function DiscardedBooks() {
         </div>
       )}
 
-      {/* No Data Message */}
-      {!loading && !error && data.length === 0 && (
-        <div className="no-data-message">No discarded books found.</div>
-      )}
-
       {/* Pagination */}
-      {!loading && !error && totalPages > 0 && (
+      {!error && totalPages > 0 && (
         <Pagination
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}

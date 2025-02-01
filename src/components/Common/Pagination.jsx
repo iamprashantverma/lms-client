@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './Pagination.css';
 
 function Pagination({ totalPages, currentPage, setCurrentPage }) {
   const [jumpTo, setJumpTo] = useState('');
@@ -9,7 +10,7 @@ function Pagination({ totalPages, currentPage, setCurrentPage }) {
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
-      setCurrentPage(newPage - 1); 
+      setCurrentPage(newPage - 1);
     }
   };
 
@@ -22,23 +23,25 @@ function Pagination({ totalPages, currentPage, setCurrentPage }) {
     }
     setJumpTo('');
   };
-  if (totalPages === 0)
-      return; 
+
+  if (totalPages === 0) return null;
 
   return (
-    <div className="pagination-container">
+    <div className="unique-pagination-container">
       <button
         onClick={() => handlePageChange(currentPage)}
         disabled={currentPage === 0}
+        className="unique-pagination-button"
       >
         Prev
       </button>
-      <span>
+      <span className="unique-pagination-info">
         Page {currentPage + 1} of {totalPages}
       </span>
       <button
         onClick={() => handlePageChange(currentPage + 2)}
         disabled={currentPage + 1 === totalPages}
+        className="unique-pagination-button"
       >
         Next
       </button>
@@ -49,8 +52,15 @@ function Pagination({ totalPages, currentPage, setCurrentPage }) {
         onChange={(e) => setJumpTo(e.target.value)}
         value={jumpTo}
         min={0}
+        className="unique-pagination-input"
       />
-      <button onClick={handleJumpTo} disabled={jumpTo === ''} >Go</button>
+      <button
+        onClick={handleJumpTo}
+        disabled={jumpTo === ''}
+        className="unique-pagination-button"
+      >
+        Go
+      </button>
     </div>
   );
 }

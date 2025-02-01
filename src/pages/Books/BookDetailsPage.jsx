@@ -10,9 +10,7 @@ function BookDetailsPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [book, setBook ] = useState(null);
-   
-
-        
+          
     useEffect(()=>{
         setError(null);
         setBook(null);

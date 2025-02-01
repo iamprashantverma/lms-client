@@ -31,7 +31,6 @@ function Author() {
 
   return (
     <div className='author-container'>
-      {loading && <div>Loading authors...</div>}
       {error && <div style={{ color: 'red' }}>{error}</div>}
 
       <div className='author-list'>
@@ -47,11 +46,13 @@ function Author() {
         ))}
       </div>
 
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        setCurrentPage={setCurrentPage}
-      />
+      <div className="author-pagination">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          setCurrentPage={setCurrentPage}
+        />
+      </div>
     </div>
   );
 }

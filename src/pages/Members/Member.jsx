@@ -5,7 +5,6 @@ import {
   approveUser,
   rejectMember
 } from "../../services/api/adminService";
-import Loading from "../../components/Common/Loading";
 import { useSearchParams } from "react-router-dom";
 import Pagination from "../../components/Common/Pagination";
 import MemberCard from "../../components/Card/Member/MemberCard";
@@ -20,7 +19,7 @@ function Member() {
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
 
-  //  calling the appropriate api call based on the member Type
+
   useEffect(() => {
     const memberHandler = async () => {
       try {
@@ -75,7 +74,7 @@ function Member() {
   }
 
   return (
-    <div>
+    <div className="main-member-container">
       {from === "member" && (
         <div className="member-container">
           <div className="member-card">
@@ -97,8 +96,8 @@ function Member() {
       )}
 
       {from === "user" && (
-        <div className="member-container">
-          <div className="member-card">
+        <div className="user-container">
+          <div className="user-card">
             {members.map((member) => (
               <MemberCard
                 key={member.userId || member.registrationId}
@@ -112,13 +111,14 @@ function Member() {
               setCurrentPage={setCurrentPage}
               totalPages={totalPages}
             />
-          </div>
+          </div> 
         </div>
       )}
-      {loading && <Loading />}
+
       {error && <p className="error-message">{error}</p>}
-      {members.length === 0 && <p>No Data Available</p>}
+      {members.length === 0 && <p>No Data Available</p>} 
     </div>
+
   );
 }
 

@@ -7,11 +7,11 @@ function MemberDetails({ member, setAction , userAction }) {
   return (
     <div className="member-details-container">
       {/* Member Header Section */}
-      <div className="member-header">
-        <div className="member-img">
+      <div className="member-details-header">
+        <div className="member-details-img">
           {member.name[0]}
         </div>
-        <div className="member-info">
+        <div className="member-detail-page-info">
           <p>
             <strong>Name:</strong> {member.name}
           </p>
@@ -28,26 +28,23 @@ function MemberDetails({ member, setAction , userAction }) {
       </div>
 
       {/* Member Details Section */}
-      <div className="member-middle">
-        <p>
-          <strong>Enrollment Date:</strong> {member.enrollmentDate}
+      <div className="member-details-middle">
+          <strong>Enrollment Date:</strong> <p> {member.enrollmentDate}</p>
+
+          <strong>Approved By:</strong> <p>{member.approvedBy}</p>
+        
+          <strong>Email:</strong> <p> {member.email}
         </p>
-        <p>
-          <strong>Approved By:</strong> {member.approvedBy}
+      
+          <strong>Contact No:</strong>  <p> {member.contactNo}
         </p>
-        <p>
-          <strong>Email:</strong> {member.email}
-        </p>
-        <p>
-          <strong>Contact No:</strong> {member.contactNo}
-        </p>
-        <p>
-          <strong>Address:</strong> {member.address}
+      
+          <strong>Address:</strong>  <p> {member.address}
         </p>
       </div>
 
       {/* Member Footer Section */}
-      <div className="member-footer">
+      <div className="member-details-footer">
         {member.registrationId && (
           <div className="member-button-group">
             <button onClick={()=>{userAction(member.registrationId,'approve')}} >

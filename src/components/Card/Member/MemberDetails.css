@@ -1,33 +1,52 @@
 .member-details-container {
     width: 100%;
-    max-width: 500px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-  }
-  
-  .member-header {
+    height: 100%;
     display: flex;
-    align-items: center;
-    margin-bottom: 15px;
+    flex-direction: column;
+    gap:4%;
   }
   
-  .member-img {
-    width: 60px;
-    height: 60px;
-    background-color: #007bff;
-    color: white;
-    font-size: 32px;
-    font-weight: bold;
-    text-align: center;
-    line-height: 60px;
+  .member-details-header{
+    padding-top: 1%;
+    padding-left: 4%;
+    display: flex;
+    width: 100%;
+    height: 35%;
+    justify-content: space-evenly;
+    gap:10%;
+  }
+  .member-details-img{
+    width: 35%;
+    height: 100%;
+    font-size: 9em;
     border-radius: 50%;
-    margin-right: 15px;
-  }
-  
-  .member-button-group {
+    background-color: rgb(13, 236, 236);
     display: flex;
-    gap: 10px;
+    justify-content: center;
+    align-items: center;
   }
-  
 
-  
+  .member-detail-page-info{
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    font-size: 1.2em;
+  }
+  .member-details-middle{
+    width: 100%;
+    height: 45%;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    padding-left: 5%;
+    padding-right: 5%;
+
+  }
+  .member-details-footer{
+    width: 90%;
+  }
+  .member-button-group{
+    display: flex;
+    justify-content: space-around;
+  }
+ 

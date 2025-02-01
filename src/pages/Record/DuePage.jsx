@@ -36,7 +36,7 @@ function DuePage() {
       <h1>Due Books</h1>
 
       {/* Loading Spinner */}
-      {loading && <Loading />}
+      {/* {loading && <Loading />} */}
 
       {/* Error Message */}
       {error && <div className="error-message">{error}</div>}

@@ -7,16 +7,18 @@ import {
   FaPenNib,
   FaBuilding,
   FaHandHolding,
-  FaChartBar,
-  FaCog,
+  FaHeart,
+  FaBookmark,
+  FaBookOpen
 } from "react-icons/fa";
 import "./SideBar.css";
 
 function SideBar() {
+  console.log("i m at the side bar");
   const { user } = useContext(AuthContext);
   const [hoverItem, setHoverItem] = useState(null);
 
-  const { role } = user;
+  const role  = user?.role || null;
 
   return (
     <div className= "sidebar" >
@@ -148,6 +150,34 @@ function SideBar() {
           )}
         </div>
       )}
+
+
+      {/* Members */}
+      <div className="member-sidebar-items">
+        {role === "MEMBER" && (
+          <Link to="/"  className="member-sidebar-item" >
+            <FaBook/> Catalog
+          </Link>
+        )}
+
+        {role === "MEMBER" && (
+          <Link to="/member/interface?type=borrow" className="member-sidebar-item" >
+            <FaBookOpen /> Borrowed Books
+          </Link>
+        )}
+
+        {role === "MEMBER" && (
+          <Link to="/member/interface?type=reserve"  className="member-sidebar-item"  >
+            <FaBookmark  /> Reserved Books
+          </Link>
+        )}
+
+        {role === "MEMBER" && (
+          <Link to="/member/interface?type=fav"  className="member-sidebar-item"  >
+            <FaHeart  /> Favourites
+          </Link>
+        )}
+      </div>
       
     </div>
   );

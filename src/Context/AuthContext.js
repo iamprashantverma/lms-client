@@ -7,7 +7,7 @@ import { refreshAccessToken } from '../services/api/adminService';
 const AuthContext = createContext();
 
 function AuthProvider({ children }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [accessToken, setAccessToken] = useState('');

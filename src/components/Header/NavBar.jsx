@@ -13,7 +13,7 @@ function NavBar() {
 
   const handleLogout = () => {
     logout();
-    navigate("/");
+    navigate("/",{replace:true});
   };
 
   const userSubmit = async(e)=>{
@@ -27,7 +27,6 @@ function NavBar() {
       if (userSelect === "Book") {
         navigate(`/admin/bookdetails?isbn=${userInput}`); 
       } else if (userSelect === "Member") {
-        console.log("navigation to mem detail apge")
         navigate(`/admin/mem-details?id=${userInput}`); 
       }
     }
@@ -60,7 +59,7 @@ function NavBar() {
             onChange={(e) => setUserInput(e.target.value)}
             type="text"
             placeholder={
-              user !== null ? (userSelect === "Book"
+              user !== null && user.role ==='ADMIN' ? (userSelect === "Book"
                 ? "Enter ISBN Number"
                 : "Enter User ID"):('Enter Book Title')
             }
@@ -102,7 +101,7 @@ function NavBar() {
         )}
         {user && (
           <li>
-            <NavLink to={role === "ADMIN" ? "/admin" : "/member"}>
+            <NavLink to={role === "ADMIN" ? "/admin" : "/member/dashboard"}>
               <FaTachometerAlt size={20} /> Dashboard
             </NavLink>
           </li>

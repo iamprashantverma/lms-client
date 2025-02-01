@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import RecordCard from "../../components/Card/Record/RecordCard";
 import Pagination from "../../components/Common/Pagination";
-import Loading from "../../components/Common/Loading";
+import { toast } from "react-toastify";
 import { getAllBorrowedBook } from "../../services/api/adminService";
 import "./Borrow.css";
 
@@ -31,9 +31,9 @@ function Borrow() {
         endDate: endDate,
         page: currentPage,
       });
-      console.log(startDate,endDate,response);
       setData(response.data.content);
       setTotalPages(response.data.totalPages);
+      
     } catch (err) {
       setError(err.error.message || "Failed to fetch data.");
     } finally {
@@ -44,6 +44,7 @@ function Borrow() {
   // Fetch data on page load and when dependencies change
   useEffect(() => {
     fetchData();
+    
   }, [currentPage]);
 
   // Handle Search Button Click
@@ -52,6 +53,8 @@ function Borrow() {
     setData([]);
     fetchData();
   };
+
+  
 
   return (
     <div className="borrow-container">
@@ -76,34 +79,35 @@ function Borrow() {
         </div>
       </div>
 
-      {/* Loading Spinner */}
-      {loading && <Loading />}
+      {/* Loading Spinner
+      {loading && <Loading />} */}
 
       {/* Error Message */}
-      {error && <div className="error-message">{error}</div>}
+      
 
       {/* Data List */}
       {!loading && !error && data.length > 0 && (
-        <div className="borrow-data-grid">
+        <div className="borrow-data-of-card">
           {data.map((record) => (
             <RecordCard key={record.recordId} record={record} />
           ))}
         </div>
       )}
 
-      {/* No Data Message */}
-      {!loading && !error && data.length === 0 && (
-        <div className="no-data-message">No records found for the selected dates.</div>
-      )}
-
-      {/* Pagination */}
-      {!loading && !error && totalPages > 0 && (
-        <Pagination
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalPages={totalPages}
-        />
-      )}
+      <div className="borrow-footer">
+          {  !loading && !error && data.length === 0 && 
+              <p>No Data Present </p>
+          }
+          {error && <div className="error-message">{error}</div>}
+          {/* Pagination */}
+          {!loading && !error && totalPages > 0 && (
+            <Pagination
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              totalPages={totalPages}
+            />
+          )}
+      </div>
     </div>
   );
 }

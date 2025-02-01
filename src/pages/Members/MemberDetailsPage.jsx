@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
   findMember,
   memberReservedBooks,
@@ -9,12 +10,12 @@ import {
   actionOnReservedBook,
   findUser,
   rejectMember,
-  approveUser
+  approveUser,
 } from "../../services/api/adminService";
 import Loading from "../../components/Common/Loading";
-import BookCard from '../../components/Card/Book/BookCard';
+import BookCard from "../../components/Card/Book/BookCard";
 import MemberDetails from "../../components/Card/Member/MemberDetails";
-import './MemberDetailsPage.css';
+import "./MemberDetailsPage.css";
 
 function MemberDetailsPage() {
   const [searchParams] = useSearchParams();
@@ -24,10 +25,10 @@ function MemberDetailsPage() {
   const [error, setError] = useState("");
   const [member, setMember] = useState(null);
   const [action, setAction] = useState(null);
-  const [bookList, setBookList] = useState(null); 
-  const [refresh, setRefresh] = useState(false); 
+  const [bookList, setBookList] = useState(null);
+  const [refresh, setRefresh] = useState(false);
 
-  //  fetching the data based on the userId Or Registration Id
+  // Fetch member or user data based on ID
   useEffect(() => {
     if (!id) {
       setError("Please enter a valid User ID");
@@ -40,14 +41,15 @@ function MemberDetailsPage() {
       try {
         let resp;
         if (id.startsWith("USER-")) {
-          resp = await findMember(id); 
-
+          resp = await findMember(id);
         } else {
-          resp = await findUser(id); 
+          resp = await findUser(id);
         }
         setMember(resp);
+ 
       } catch (err) {
-        setError(err.error?.message || "Failed to fetch details");
+        toast.error(err?.error?.message || "Failed to fetch details");
+        
       } finally {
         setLoading(false);
       }
@@ -55,7 +57,7 @@ function MemberDetailsPage() {
     fetchData();
   }, [id, refresh]);
 
-  //  fecthing the book data eg reserved Book or Borrowed Book , and also taling the action on the member
+  // Handle actions such as activating, deactivating, fetching books, etc.
   useEffect(() => {
     const handleAdminAction = async () => {
       if (!action) return;
@@ -69,14 +71,13 @@ function MemberDetailsPage() {
           setRefresh((prev) => !prev);
         } else if (action === "borrowed") {
           const { data } = await memberBorrowedBooks(id);
-          console.log(data);
           setBookList({ type: "borrowed", books: data });
         } else if (action === "reserved") {
           const { data } = await memberReservedBooks(id);
           setBookList({ type: "reserved", books: data });
         }
       } catch (err) {
-        setError(err.error?.message || "Action failed");
+        toast.error(err?.error?.message || "Failed to fetch details");
       } finally {
         setAction(null);
       }
@@ -85,79 +86,99 @@ function MemberDetailsPage() {
     handleAdminAction();
   }, [action, id]);
 
-  //  rejecting or accepting the reserved book of the users
+  // Handle book actions (approve/reject reservation)
   const bookAction = async (reservationId, actionStatus) => {
     try {
-      await actionOnReservedBook({ id: reservationId, actionStatus: actionStatus });
+      await actionOnReservedBook({ id: reservationId, actionStatus });
       setBookList((prevBookList) => {
         if (Array.isArray(prevBookList?.books)) {
           return {
             ...prevBookList,
-            books: prevBookList.books.filter((book) => book.reservationId !== reservationId),
+            books: prevBookList.books.filter(
+              (book) => book.reservationId !== reservationId
+            ),
           };
         }
         return prevBookList;
+
       });
     } catch (error) {
-      setError(error?.error?.message || "Failed to update reservation");
+      toast.error(error?.error?.message || "Failed to fetch details");
     }
   };
 
-  //  taking action on memberShip Requests
-  const userAction = async(id , memAction)=>{
-    console.log(id,memAction)
+  // Handle user actions (approve/reject membership requests)
+  const userAction = async (id, memAction) => {
     try {
       let resp;
-        if (memAction ==='approve') {
-          resp = await approveUser(id);
-        } else if (memAction === 'reject') {
-         resp = await rejectMember(id);
-        }
-        setMember(resp.data);
+      if (memAction === "approve") {
+        resp = await approveUser(id);
+      } else if (memAction === "reject") {
+        resp = await rejectMember(id);
+      }
+      setMember(resp.data);
+      toast.success("Successfully Approved");
     } catch (err) {
-      console.log(err);
-      setError(err.error.message);
+      setError(err?.error?.message || "Failed to process request");
     }
-  }
+  };
 
-  
   return (
-    <>
-      {member && (
-        <div className="member-container">
-          <div className="member-info">
-            <MemberDetails  userAction ={userAction} setAction={setAction} member={member} />
+    <div className="member-detail-page-main-container">
+      {/* Member Details Section */}
+     {member && <div className="member-info-container">
+        <MemberDetails
+          userAction={userAction}
+          setAction={setAction}
+          member={member}
+        />
+      </div>}
+  
+      {/* Borrowed Books Section */}
+    <div className="main-catlog-container">
+      <div className="borrowed-books-container">
+        {bookList?.type === "borrowed" && (
+          <div className="member-borrow-book">
+            <h3>Borrowed Books</h3>
+            <ul className="mem-bor-cont">
+              {bookList.books.map((book) => (
+                <BookCard
+                  bookAction={bookAction}
+                  book={book}
+                  key={book.isbn}
+                />
+              ))}
+            </ul>
           </div>
-
-          <div className="book-info">
-            {/* Display Reserved or Borrowed Books */}
-            {bookList?.type === "borrowed" && (
-              <div>
-                <h3>Borrowed Books</h3>
-                <ul>
-                  {bookList.books.map((book) => (
-                    <BookCard bookAction={bookAction} book={book} key={book.isbn} />
-                  ))}
-                </ul>
-              </div>
-            )}
-            {bookList?.type === "reserved" && (
-              <div>
-                <h3>Reserved Books</h3>
-                <ul>
-                  {bookList.books.map((book) => (
-                    <BookCard bookAction={bookAction} book={book} key={book.reservationId} />
-                  ))}
-                </ul>
-              </div>
-            )}
+        )}
+      </div>
+  
+      {/* Reserved Books Section */}
+      <div className="reserved-books-container">
+        {bookList?.type === "reserved" && (
+          <div className="member-reserved-book">
+            <h3>Reserved Books</h3>
+            <ul className="mem-res-cont">
+              {bookList.books.map((book) => (
+                <BookCard
+                  bookAction={bookAction}
+                  book={book}
+                  key={book.reservationId}
+                />
+              ))}
+            </ul>
           </div>
-        </div>
-      )}
-      {loading && <Loading />}
-      {error && <p>{error}</p>}
-    </>
+        )}
+       
+      </div>
+    </div>
+  
+      {/* Loading and Error Messages */}
+      {/* {loading && <Loading />} */}
+      {/* {error && <p className="error-message">{error}</p>} */}
+    </div>
   );
+  
 }
 
 export default MemberDetailsPage;

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { returnBook } from '../../services/api/adminService';  // Adjust path if necessary
-
+import { returnBook } from '../../services/api/adminService'; 
 const ReturnBookForm = () => {
   const [bookCopyId, setBookCopyId] = useState('');
   const [condition, setCondition] = useState('');
@@ -31,11 +30,11 @@ const ReturnBookForm = () => {
   };
 
   return (
-    <div className="p-4 shadow-lg">
+    <div className="shadow-lg">
       <form onSubmit={handleSubmit} className="space-y-4">
         <h2 className="text-xl font-semibold">Return Book</h2>
 
-        <div className="flex flex-col space-y-2">
+        <div className="">
           <label htmlFor="bookCopyId" className="font-medium">Book Copy ID</label>
           <input
             id="bookCopyId"

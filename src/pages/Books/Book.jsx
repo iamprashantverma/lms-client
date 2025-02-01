@@ -1,52 +1,49 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { getAllBooks, getAllReservedBook, actionOnReservedBook } from '../../services/api/adminService';
-import Loading from '../../components/Common/Loading';
+import MemberBookCard from '../../components/Card/Book/MemberBookCard';
 import Pagination from '../../components/Common/Pagination';
 import BookCard from '../../components/Card/Book/BookCard';
+import { useContext } from 'react';
+import { AuthContext } from '../../Context/AuthContext';
+import { getAllBooks as getMemberAllBooks } from '../../services/api/memberService';
 import './Book.css';
 
 function Book() {
+  const {user} = useContext(AuthContext);
   const { id } = useParams(); 
   const [books, setBooks] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [error, setError] = useState(null);
+  console.log(id);
+  const fetchBooks = useCallback(async () => {
+    try {
+      let resp;
+      if (id === 'res') {
+        resp = await getAllReservedBook(currentPage);
+      } else if(id ==='all'){
+          resp = await getMemberAllBooks(currentPage);
+      } else  {
+        resp = await getAllBooks(currentPage);
+      }
+      setBooks(resp.data.content);
+      setTotalPages(resp.data.totalPages);
+    } catch (error) {
+      console.error(error.message || error);
+      setError('Failed to fetch books.');
+    } finally {
+    }
+  }, [currentPage, id]);
 
   useEffect(() => {
-    const getBooks = async () => {
-      try {
-        setLoading(true);
-        let resp;
-        console.log(id);
-        if (id === 'res') {
-          resp = await getAllReservedBook(currentPage);
-        } else {
-          resp = await getAllBooks(currentPage);
-        }
-        console.log(resp.data.content);
-        setBooks(resp.data.content);
-        setTotalPages(resp.data.totalPages);
-      } catch (error) {
-        console.error(error.message || error);
-        setError('Failed to fetch books.');
-      } finally {
-        setLoading(false);
-      }
-    };
+    fetchBooks();
+  }, [fetchBooks]);
 
-    getBooks();
-  }, [currentPage, id]);  
-
-  //  handling the book accept or reject request
   const bookAction = async (reservationId, actionStatus) => {
     try {
       await actionOnReservedBook({ id: reservationId, actionStatus: actionStatus });
-      setBooks((prevBooks) => {
-       
-        return prevBooks.filter((book) => book.reservationId !== reservationId);
-      });
+      setBooks((prevBooks) => prevBooks.filter((book) => book.reservationId !== reservationId));
     } catch (error) {
       setError(error?.message || "Failed to update reservation");
     }
@@ -54,17 +51,24 @@ function Book() {
 
   return (
     <div className='Book-container'>
-      <div className="book-content-container">
+      {/* ADMIN */}
+      {user.role ==='ADMIN'&& <div className="book-content-container">
         {books && books.map((book) => (
-          <BookCard bookAction={bookAction} key={book.isbn} book={book} />
+          <BookCard bookAction={bookAction} key={book.Id} book={book} />
         ))}
-      </div>
+      </div>}
 
-      {loading && <Loading />}
+        {/*  MEMBER */}
+      {user.role ==='MEMBER' && <div className="book-content-container">
+        {books && books.map((book) => (
+          <MemberBookCard  key={book.bookId} book={book} />
+        ))}
+      </div>}
+      
+      {error && <div className="error-message">{error}</div>}
 
-      {/* Pagination */}
-      {!loading && !error && currentPage > 1 && (
-        <div className='pagination-container'>
+      {totalPages > 0 && (
+        <div className='book-pagination-container'>
           <Pagination
             totalPages={totalPages}
             currentPage={currentPage}
@@ -72,8 +76,6 @@ function Book() {
           />
         </div>
       )}
-
-      {error && <div className="error-message">{error}</div>}
     </div>
   );
 }

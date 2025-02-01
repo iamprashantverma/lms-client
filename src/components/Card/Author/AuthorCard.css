@@ -1,140 +1,128 @@
-/* Import a more stylish font (optional) */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
 .author-card {
-  background-color: #ffffff; /* White background */
-  border-radius: 15px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  width: 80%;
+  height: 90%;
   display: flex;
-  padding: 20px;
-  max-width: 350px;
-  margin: 20px;
-  font-family: 'Poppins', sans-serif;
   align-items: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  flex-wrap: wrap;
-  border: 1px solid #e0e0e0; /* Light gray border */
-  overflow: hidden;
-  background: linear-gradient(135deg, #f0f4f7, #ffffff); /* Subtle gradient background */
+  justify-content: center;
+  flex-direction: column;
+  padding-top: 2%;
 }
 
 .author-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2%);
 }
 
 .author-avatar {
-  background-color: #ff6f61; /* Vibrant coral color for avatar */
-  color: #ffffff;
-  font-size: 2.2rem;
+  width: 20%;
+  height: 30%;
+  background: #4A90E2;
+  color: #fff;
+  font-size: 6vw; /* Smaller font size */
   font-weight: bold;
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin-right: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease;
-}
-
-.author-avatar:hover {
-  background-color: #d84e44; /* Darker coral when hovered */
+  justify-content: center;
+  border-radius: 50%;
 }
 
 .author-details {
-  flex: 1;
-  word-wrap: break-word;
+  height: 70%;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .author-details h3 {
-  margin: 0;
-  font-size: 1.5rem;
-  color: #2c3e50; /* Darker text color for title */
-  font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: 1.2em; /* Slightly smaller font size */
+  color: #333;
+  margin-bottom: 5%;
+  word-wrap: break-word; /* Ensure long words break and don't overflow */
 }
 
 .author-details p {
-  font-size: 1.1rem;
-  color: #7f8c8d; /* Muted gray for text */
-  margin: 5px 0;
-  line-height: 1.5;
-  word-wrap: break-word;
+  font-size: 0.85em; /* Smaller font size for paragraphs */
+  color: #555;
+  margin: 2% 0;
+  word-wrap: break-word; /* Ensure long words break and don't overflow */
 }
 
-.author-details strong {
-  color: #34495e; /* Slightly darker shade for labels */
+.author-details p strong {
+  color: #000;
 }
 
-.author-container {
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-  background-color: #f9f9f9; /* Light background for container */
+
+@media (max-width: 1000px) {
+  .author-card {
+    width: 90%;
+    height: 90%;
+  }
+
+  .author-avatar {
+    width: 25%;
+    height: 20%;
+    font-size: 5vw; 
+  }
+  .author-details{
+    height: 80%;
+  }
+  .author-details h3 {
+    font-size: .9em; 
+  }
+
+  .author-details p {
+    font-size: 0.6em;
+  }
 }
 
 @media (max-width: 480px) {
   .author-card {
-    flex-direction: column;
-    align-items: flex-start;
-    max-width: 100%;
-    margin: 10px 0;
-    padding: 15px;
+    width: 95%;
+    height: 100%;
+    margin-bottom: 2%;
   }
 
   .author-avatar {
-    margin-bottom: 15px;
+    width: 10%;
+    height: 20%;
+    font-size: 1em; 
+  }
+
+  .author-details {
+   height: 80%;
+   width:80% ;
   }
 
   .author-details h3 {
-    font-size: 1.3rem;
+    font-size: 1em;
   }
 
   .author-details p {
-    font-size: 1rem;
+    font-size: 0.75em; 
   }
 }
 
-@media (max-width: 768px) {
+
+@media (max-width: 320px) {
   .author-card {
-    flex-direction: row;
-    padding: 18px;
-    margin: 15px;
+    width: 95%;
+    height: 75%;
   }
 
   .author-avatar {
-    margin-right: 15px;
+    width: 35%;
+    height: 35%;
+    font-size: 12vw; /* Larger scaling for very small screens */
   }
 
   .author-details h3 {
-    font-size: 1.4rem;
+    font-size: 0.9em; /* Even smaller heading font size */
   }
 
   .author-details p {
-    font-size: 1.05rem;
-  }
-}
-
-@media (max-width: 1024px) {
-  .author-card {
-    flex-direction: row;
-    max-width: 100%;
-    padding: 18px;
-  }
-
-  .author-avatar {
-    margin-right: 15px;
-  }
-
-  .author-details h3 {
-    font-size: 1.4rem;
-  }
-
-  .author-details p {
-    font-size: 1.1rem;
+    font-size: 0.7em; /* Even smaller font size for paragraphs */
   }
 }

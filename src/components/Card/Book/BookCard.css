@@ -1,84 +1,149 @@
-.book-card {
-  border: 1px solid #ccc;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.book-card-container {
   display: flex;
   flex-direction: column;
-}
-
-.book-image-container {
+  height: 250px;
   width: 100%;
-  text-align: center;
-  margin-bottom: 15px;
+  background-color: #ffffff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
 }
 
-.book-image {
-  max-width: 100%;
-  height: auto;
-  border-radius: 5px;
+.book-card-container:hover {
+  transform: scale(1.01);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-.book-content {
-  margin-bottom: 15px;
+.book-Header {
+  display: flex;
+  gap: 5%;
+  word-wrap: break-word;
+  width: 100%;
 }
 
-.book-title {
-  font-size: 1.2rem;
+.book-card-image {
+  flex: 0 0 45%;
+  padding: 3%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.book-card-image img {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.book-card-header-content {
+  padding-top: 3%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: flex-start;
+}
+
+.book-card-header-content p {
+  color: #475569;
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.book-card-header-content p:first-child {
+  font-size: 1.3rem;
   font-weight: bold;
+  color: #1e293b;
 }
 
-.book-info {
+.book-card-header-content p:nth-child(2) {
+  font-size: .9rem;
+  font-weight: 600;
+  color: #3b82f6;
+}
+.book-card-header-content p:nth-child(3) {
   font-size: 1rem;
-  color: #555;
+  font-weight: 600;
+}
+
+.book-footer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 50%;
+  overflow:hidden;
+}
+
+.book-card-footer-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 2%;
+}
+
+.book-card-footer-content p {
+  color: #64748b;
+  font-size: 0.875rem;
 }
 
 .book-action-buttons {
   display: flex;
-  gap: 10px;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: auto;
+  padding:2%;
 }
 
 .approve-button,
 .reject-button {
-  padding: 8px 15px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.approve-button {
-  background-color: #4CAF50;
-  color: white;
-  transition: background-color 0.3s ease;
-}
-
-.reject-button {
-  background-color: #f44336;
-  color: white;
-  transition: background-color 0.3s ease;
-}
-
-.approve-button:hover {
-  background-color: #45a049;
-}
-
-.reject-button:hover {
-  background-color: #e53935;
-}
-
-.placeholder {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 150px;
-  background-color: #e0e0e0;
-  border-radius: 5px;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
 }
 
-.placeholder-text {
-  font-size: 1rem;
-  color: #888;
+.approve-button {
+  background-color: #22c55e;
+  color: #ffffff;
 }
+
+.approve-button:hover {
+  background-color: #16a34a;
+}
+
+.approve-button:disabled {
+  background-color: #d1fae5;
+  color: #6ee7b7;
+  cursor: not-allowed;
+}
+
+.reject-button {
+  background-color: #ef4444;
+  color: #ffffff;
+}
+
+.reject-button:hover {
+  background-color: #dc2626;
+}
+
+.reject-button:disabled {
+  background-color: #fecaca;
+  color: #f87171;
+  cursor: not-allowed;
+}
+
+

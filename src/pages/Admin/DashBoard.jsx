@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DashBoardCard from './DashBoardCard';
 import './DashBoard.css';
+
 import {
   getAllBooks,
   membershipRequests,
@@ -12,6 +13,7 @@ import {
 import { FaBook, FaUsers, FaBookmark, FaClipboardList, FaTrashAlt } from 'react-icons/fa';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { toast } from 'react-toastify';
 
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -109,56 +111,47 @@ function DashBoard() {
 
   return (
     <div className='dashboard-container'>
-     
-      <div className="dashboard-left-card-container">
-        <DashBoardCard 
-          title="Total Books"
-          count={books}
-          icon={<FaBook />}
-          link="books/all"
-        />
-        <DashBoardCard 
-          title="Membership Pending"
-          count={memberRequest}
-          icon={<FaClipboardList />}
-          link="mem-req?from=user"
-        />
-        <DashBoardCard 
-          title="Total Members"
-          count={members}
-          icon={<FaUsers />}
-          link="members?from=member"
-        />
-        <DashBoardCard 
-          title="Reserved Books"  
-          count={reservedBooks}
+      <DashBoardCard 
+        title="Total Books"
+        count={books}
+        icon={<FaBook />}
+        link="books/all"
+      />
+      <DashBoardCard 
+        title="Membership Pending"
+        count={memberRequest}
+        icon={<FaClipboardList />}
+        link="mem-req?from=user"
+      />
+      <DashBoardCard 
+        title="Total Members"
+        count={members}
+        icon={<FaUsers />}
+        link="members?from=member"
+      />
+      <DashBoardCard 
+        title="Reserved Books"  
+        count={reservedBooks}
+        icon={<FaBookmark />}
+        link="books/res"
+      />
+
+      <DashBoardCard 
+          title="Today's Borrows"
+          count={borrowedBooks}
           icon={<FaBookmark />}
-          link="books/res"
-        />
-
+          link="borrow-reports"
+      />
+      <DashBoardCard 
+          title="Discarded Books"
+          count={discarded}
+          icon={<FaTrashAlt />}
+          link="discard-books"
+      />
+      <div className="graph-container">
+        <h3>Book Distribution</h3>
+        <Pie data={pieData} options={pieOptions} />
       </div>
-
-      <div className='dashboard-right-card-container'>
-        <div className='admin-dashboard-card-container'>
-          <DashBoardCard 
-            title="Today's Borrows"
-            count={borrowedBooks}
-            icon={<FaBookmark />}
-            link="borrow-reports"
-          />
-          <DashBoardCard 
-            title="Discarded Books"
-            count={discarded}
-            icon={<FaTrashAlt />}
-            link="discard-books"
-          />
-        </div>
-
-        <div className='admin-dashboard-graph-container'>
-          <h3>Book Distribution</h3>
-          <Pie data={pieData} options={pieOptions} />
-        </div>
-      </div>  
     </div>
   );
 }

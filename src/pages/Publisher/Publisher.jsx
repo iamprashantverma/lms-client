@@ -30,7 +30,7 @@ function Publisher() {
 
   return (
     <div className='publisher-container'>
-      {loading && <div>Loading publishers...</div>}
+      {/* {loading && <div>Loading publishers...</div>} */}
       {error && <div style={{ color: 'red' }}>{error}</div>}
 
       <div className='publisher-list'>

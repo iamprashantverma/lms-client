@@ -4,9 +4,11 @@ import { Outlet } from 'react-router-dom'
 import { useContext } from 'react'
 import { AuthContext } from '../../Context/AuthContext'
 
+
 function Layout() {
+
   const {open} = useContext(AuthContext);
-  console.log(open)
+  
   return (
     <div className='layout'>
         <div className={open ? "sidebar-open":"sidebar-close"}>
@@ -14,8 +16,7 @@ function Layout() {
         </div>
         <div className='content-container'>
           <Outlet/>
-        </div>
-        
+        </div>   
     </div>
   )
 }

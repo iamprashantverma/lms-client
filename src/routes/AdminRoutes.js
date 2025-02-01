@@ -20,17 +20,15 @@ import DiscardedBooks from '../pages/Record/DiscardBooks';
 import ReturnBookForm from '../pages/Record/ReturnBookForm';
 
 function AdminRoutes() {
+
   return (
     <Routes>
-      {/* PrivateRoute to protect all admin routes */}
       <Route element={<PrivateRoute />}>
         <Route path="/" element={<Layout />}>
           
-          {/* Admin Dashboard and Profile Routes */}
           <Route path='profile' element={<Profile />} />
           <Route index element={<DashBoard />} />
-
-          {/* Books Related Routes */}
+          
           <Route path="books/:id" element={<Book />} />
           <Route path='add-book' element={<BookForm />} />
           <Route path="bookdetails" element={<BookDetailsPage />} />

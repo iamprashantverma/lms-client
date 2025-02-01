@@ -74,15 +74,8 @@ function RecordPage() {
           <button onClick={handleSearch} className="search-button">Search</button>
         </div>
       </div>
-
-      {/* Loading Spinner */}
-      {loading && <Loading />}
-
-      {/* Error Message */}
-      {error && <div className="error-message">{error}</div>}
-
       {/* Data List */}
-      {!loading && !error && data.length > 0 && (
+      {!error && data.length > 0 && (
         <div className="record-data-grid">
           {data.map((record) => (
             <RecordCard key={record.recordId} record={record} />
@@ -90,19 +83,24 @@ function RecordPage() {
         </div>
       )}
 
-      {/* No Data Message */}
-      {!loading && !error && data.length === 0 && (
-        <div className="no-data-message">No records found for the selected dates.</div>
-      )}
+      <div className="all-record-footer"> 
+          {/* No Data Message */}
+          {!loading && !error && data.length === 0 && (
+            <div className="no-data-message">No records found for the selected dates.</div>
+          )}
 
-      {/* Pagination */}
-      {!loading && !error && totalPages > 0 && (
-        <Pagination
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalPages={totalPages}
-        />
-      )}
+          {/* Error Message */}
+          {error && <div className="error-message">{error}</div>}
+
+          {/* Pagination */}
+          {!loading && !error && totalPages > 0 && (
+            <Pagination
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              totalPages={totalPages}
+            />
+          )}
+      </div>
     </div>
   );
 }
